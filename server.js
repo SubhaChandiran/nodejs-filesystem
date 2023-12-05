@@ -35,7 +35,23 @@ app.get("/createFile", (req, res) => {
     }
 
     console.log("File created successfully:", filePath);
-    res.status(200).send("File created successfully");
+
+    // Respond with an HTML page containing information about the created file
+    const responseHtml = `
+      <html>
+        <head>
+          <title>File Created</title>
+        </head>
+        <body>
+          <h1>File Created Successfully</h1>
+          <p>File Path: ${filePath}</p>
+          <p>Filename: ${filename}</p>
+          <p>Timestamp: ${timestamp}</p>
+        </body>
+      </html>
+    `;
+
+    res.status(200).send(responseHtml);
   });
 });
 
