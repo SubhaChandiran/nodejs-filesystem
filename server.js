@@ -9,16 +9,23 @@ let rooms = [];
 let bookings = [];
 
 // Create a Room
-app.post("/createRoom", (req, res) => {
-  const { roomName, seats, amenities, pricePerHour } = req.body;
-  const room = {
-    roomName,
-    seats,
-    amenities,
-    pricePerHour,
+// Book a Room
+app.post("/bookRoom", (req, res) => {
+  const { customerName, date, startTime, endTime, roomId } = req.body;
+  const room = rooms.find((r) => r.roomName === roomId);
+  if (!room) {
+    return res.status(404).json({ message: "Room not found" });
+  }
+
+  const booking = {
+    customerName,
+    date,
+    startTime,
+    endTime,
+    roomId: room.roomName, // Use room.roomName instead of roomId
   };
-  rooms.push(room);
-  res.json({ message: "Room created successfully", room });
+  bookings.push(booking);
+  res.json({ message: "Room booked successfully", booking });
 });
 
 // Book a Room
